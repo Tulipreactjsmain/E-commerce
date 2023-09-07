@@ -2,7 +2,7 @@ import { BiShoppingBag } from "react-icons/bi";
 import { Badge, Image, Button, Offcanvas } from "react-bootstrap";
 import { useStore } from "../config/store";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Bag } from "../pages";
+
 import {
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
@@ -51,9 +51,9 @@ export default function ShoppingBag() {
           {cartItems?.length > 0 ? (
             <>
               {cartItems?.map((item) => (
-                <>
+                <div key={item._id}>
                   <div
-                    key={item._id}
+                    
                     className="d-flex align-items-center gap-4 mb-4 w-100"
                   >
                     <Link
@@ -97,7 +97,7 @@ export default function ShoppingBag() {
                     </div>
                   </div>
                   <hr />
-                </>
+                </div>
               ))}
 
               <div className="w-100">

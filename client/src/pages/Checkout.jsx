@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PageLayout, Headings } from "../components";
+import { PageLayout, Headings } from "../component";
 import { Button, Row, Col, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,9 @@ import { useStore } from "../config/store";
 import { createOrder } from "../config/api";
 
 export default function Checkout() {
+  const [next, setNext] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const {
     setShippingDetails,
     shippingDetails,
@@ -18,6 +21,7 @@ export default function Checkout() {
     currentUser,
     priceTotal,
     cartItems,
+    setCartitems,
   } = useStore();
   const {
     register,
@@ -32,6 +36,8 @@ export default function Checkout() {
     },
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Checkout";
   }, []);
@@ -43,12 +49,47 @@ export default function Checkout() {
   const calcShippingFee = (priceTotal / 2) * tax;
   const shippingFee = priceTotal > 3500 ? 0 : calcShippingFee.toFixed(2);
 
+ 
+
   const total = (
     Number(priceTotal) +
     Number(calcTax) +
     Number(shippingFee)
   ).toFixed(2);
 
+  const order = {
+    orderItems: cartItems,
+    paymentMethod: paymentMethod,
+    taxPrice: calcTax,
+    shippingPrice: shippingFee,
+    shippingDetails: shippingDetails,
+    totalPrice: total,
+  };
+  console.log(order)
+  const placeOrder = async () => {
+    setLoading(true);
+    try {
+      const res = await createOrder(order, currentUser?.access_token);
+      console.log("order", res);
+      if (res.status === 201) {
+        toast.success("Order successfully created");
+        setCartitems([]);
+        navigate(`/account/${currentUser?.user?.username}/orders`);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Order could not be placed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    console.log(data);
+    setShippingDetails(data);
+    next ? null : setNext((prev) => !prev);
+  };
   return (
     <PageLayout>
       <Headings title="Checkout" />
@@ -96,46 +137,136 @@ export default function Checkout() {
             </div>
           </Col>
           <Col md={6} lg={5}>
-            <form>
-              <div className="mb-3 inputRegBox">
-                <input
-                  type="text"
-                  placeholder="Fullname"
-                  id="fullname"
-                  className="w-100 mb-0 inputReg"
-                  autoFocus
-                  {...register("fullname")}
-                />
-              </div>
-              <div className="mb-3 inputRegBox">
-                <input
-                  type="text"
-                  placeholder="Address"
-                  id="address"
-                  className="w-100 mb-0 inputReg"
-                  autoFocus
-                  {...register("shippingAddress")}
-                />
-              </div>
-              <div className="mb-3 inputRegBox">
-                <input
-                  type="text"
-                  placeholder="Phone number"
-                  id="phone"
-                  className="w-100 mb-0 inputReg"
-                  autoFocus
-                  {...register("phone")}
-                />
-              </div>
-              <div className="mb-3 inputRegBox">
-                <input
-                  type="text"
-                  placeholder="State"
-                  id="state"
-                  className="w-100 mb-0 inputReg"
-                  autoFocus
-                  {...register("state")}
-                />
+            <h1>{next ? "Shipping info" : "Enter shipping details"}</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {!next ? (
+                <>
+                  <div className="mb-3 inputRegBox">
+                    <input
+                      type="text"
+                      placeholder="Fullname"
+                      id="fullname"
+                      className="w-100 mb-0 inputReg"
+                      autoFocus
+                      {...register("fullname", registerOptions.fullname)}
+                    />
+                    {errors.fullname?.message && (
+                      <p className="mb-3 inputRegBox text-danger fs-6">
+                        {errors.fullname.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mb-3 inputRegBox">
+                    <input
+                      type="text"
+                      placeholder="Address"
+                      id="address"
+                      className="w-100 mb-0 inputReg"
+                      autoFocus
+                      {...register(
+                        "shippingAddress",
+                        registerOptions.shippingAddress
+                      )}
+                    />
+                    {errors.shippingAddress?.message && (
+                      <p className="text-danger fs-6">
+                        {errors.shippingAddress.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mb-3 inputRegBox">
+                    <input
+                      type="text"
+                      placeholder="Phone number"
+                      id="phone"
+                      className="w-100 mb-0 inputReg"
+                      autoFocus
+                      {...register("phone", registerOptions.phone)}
+                    />
+                    {errors.phone?.message && (
+                      <p className="text-danger fs-6">{errors.phone.message}</p>
+                    )}
+                  </div>
+                  <div className="mb-3 inputRegBox">
+                    <input
+                      type="text"
+                      placeholder="State"
+                      id="state"
+                      className="w-100 mb-0 inputReg"
+                      autoFocus
+                      {...register("state", registerOptions.state)}
+                    />
+                    {errors.state?.message && (
+                      <p className="text-danger fs-6">{errors.state.message}</p>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="mb-1 fs-5">{shippingDetails.fullname}</p>
+                  <p className="mb-1 fs-5">{shippingDetails.shippingAddress}</p>
+                  <p className="mb-1 fs-5">{shippingDetails.phone}</p>
+                  <p className="mb-1 fs-5">{shippingDetails.state}</p>
+                  <hr />
+                  <h1 className="fs-5 mt-4">Select payment method</h1>
+                  {paymentOptions.map((item, i) => (
+                    <div className="form-check" key={i}>
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="paymentMethod"
+                        id={i}
+                        value={item.name}
+                        defaultChecked={item.name === paymentMethod}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                      />
+                      <label className="form-check-label" htmlFor={i}>
+                        {item.name}
+                      </label>
+                    </div>
+                  ))}
+                </>
+              )}
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                {!next && (
+                  <Button
+                    className="mt-2 fw-medium"
+                    type="submit"
+                    variant={next ? "warning" : "dark"}
+                  >
+                    Continue
+                  </Button>
+                )}
+                {next && (
+                  <Button
+                    className="mt-2 fw-medium"
+                    type="submit"
+                    variant={next ? "warning" : "dark"}
+                    onClick={() => setNext(!next)}
+                  >
+                    Back
+                  </Button>
+                )}
+                {next && (
+                  <>
+                    {paymentMethod === "Paypal" ? (
+                      <p>Paypal</p>
+                    ) : (
+                      <Button
+                        variant={next ? "success" : "warning"}
+                        type="submit"
+                        className="mt-2 fw-bold"
+                        onClick={placeOrder}
+                      >
+                        {loading ? (
+                          <Spinner animation="border " size="sm" />
+                        ) : (
+                          "Place order"
+                        )}
+                      </Button>
+                    )}
+                  </>
+                )}
               </div>
             </form>
           </Col>

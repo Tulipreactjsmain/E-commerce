@@ -24,9 +24,9 @@ export const createOrder = async (req, res) => {
         taxPrice,
         paymentMethod,
         totalPrice,
-        isPaid: paymentMethod === "paypal" ? true : false,
-        paidAt: paymentMethod === "paypal" ? Date.now : "",
-        status: paymentMethod === "paypal" ? 1 : 0,
+        isPaid: paymentMethod === "Paypal" ? true : false,
+        paidAt: paymentMethod === "Paypal" ? Date.now : "",
+        status: paymentMethod === "Paypal" ? 1 : 0,
       });
       const createOrder = await order.save();
       res.status(201).json(createOrder);
