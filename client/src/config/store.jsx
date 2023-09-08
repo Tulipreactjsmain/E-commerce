@@ -144,6 +144,7 @@ export const StateContext = ({ children }) => {
         deleteCartItems,
         decreaseCartQty,
         cartItems,
+        setCartItems,
         cartQuantity,
         priceTotal,
         show,

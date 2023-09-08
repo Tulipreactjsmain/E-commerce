@@ -11,6 +11,7 @@ export default function Categories() {
     getProductByCategory,
     collectionName
   );
+  console.log("collectionName",data);
   useEffect(() => {
     document.title = collectionName;
   }, [collectionName]);
@@ -26,10 +27,10 @@ export default function Categories() {
       {loading ? (
         <Loader />
       ) : (
-        <Row className="mt-4 gy-3">
+        <Row  className="mt-4 gy-3">
           {data.map((product) => (
             <Col key={product._id} xs={6} md={4} lg={3}>
-              <ProductCard product={product} />
+              <ProductCard key={product._id} product={product} />
             </Col>
           ))}
         </Row>

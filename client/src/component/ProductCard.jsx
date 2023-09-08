@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 export default function ProductCard({ product }) {
   const { title, slug, images, price, category } = product; //destructure product
   const { increaseCartQty, setShow } = useStore();
+  console.log("slug", slug);
 
   const addToCart = (item) => {
     increaseCartQty(item);
