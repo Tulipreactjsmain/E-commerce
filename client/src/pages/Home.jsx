@@ -29,7 +29,7 @@ export default function Home() {
           <div className="background-overlay"></div>
           <div className="layout-container centered-div d-flex flex-column justify-content-center align-items-center h-100">
             <p className="text-uppercase fw-medium">New season</p>
-            <h1 className="fs-1 fw-bold">The Summer Edit</h1>
+            <h1 className="fs-1 fw-bold text-center">The Summer Edit</h1>
             <p className="text-center fs-5 fw-bold mb-4">
               Joyful products here to get you <br />
               spending. Hurry!
