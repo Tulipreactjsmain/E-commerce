@@ -5,5 +5,6 @@ import ProductCard from "./ProductCard";
 import Headings from "./Headings";
 import PageLayout from "./PageLayout";
 import ImageModal from "./ImageModal";
+import Paypal from "./Paypal";
 
-export { Root, Featuredproduct, Conditionalproduct, ProductCard, Headings,  PageLayout, ImageModal};
+export { Root, Featuredproduct, Conditionalproduct, ProductCard, Headings,  PageLayout, ImageModal, Paypal};

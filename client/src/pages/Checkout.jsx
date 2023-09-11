@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PageLayout, Headings } from "../component";
+import { PageLayout, Headings, Paypal } from "../component";
 import { Button, Row, Col, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -250,7 +250,7 @@ export default function Checkout() {
                 {next && (
                   <>
                     {paymentMethod === "Paypal" ? (
-                      <p>Paypal</p>
+                      <Paypal total={total} placeOrder={placeOrder} />
                     ) : (
                       <Button
                         variant={next ? "success" : "warning"}

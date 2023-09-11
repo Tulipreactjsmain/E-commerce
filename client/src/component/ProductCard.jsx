@@ -16,7 +16,7 @@ export default function ProductCard({ product, onCardClick }) {
   };
   return (
     <div className="cardBox collection">
-      <Link to={`collections/${category}/${slug}`}>
+      <Link to={`/collections/${category}/${slug}`}>
         <Image
           className="object-fit-fill img-fluid mb-3"
           src={images[0]}
