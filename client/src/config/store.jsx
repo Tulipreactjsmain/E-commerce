@@ -80,7 +80,7 @@ export const StateContext = ({ children }) => {
   const increaseCartQty = (id) => {
     setCartItems((currentItems) => {
       if (currentItems.find((item) => item._id === id._id) == null) {
-        return [...currentItems, { ...id, quantity: 1 }];
+        return [...currentItems, { ...id, quantity: 1 }]; //we spread the current items in an array for us to be able to insert any incoming cart(object) to the same array. With this method we can achieve multiple items in one array
       } else {
         return currentItems.map((item) => {
           if (item._id === id._id) {
@@ -96,7 +96,7 @@ export const StateContext = ({ children }) => {
   const decreaseCartQty = (id) => {
     setCartItems((currentItems) => {
       if (currentItems.find((item) => item._id === id._id).quantity === 1) {
-        return currentItems.filter((item) => item._id !== id._id);
+        return currentItems.filter((item) => item._id !== id._id); // this line returns a new array containing only the items in currentItems whose _id is not equal to the _id of the item you want to decrease....(decreaseCartQty(theItemObject)).
       } else {
         return currentItems.map((item) => {
           if (item._id === id._id) {

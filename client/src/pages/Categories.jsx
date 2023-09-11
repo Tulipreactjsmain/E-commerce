@@ -11,7 +11,7 @@ export default function Categories() {
     getProductByCategory,
     collectionName
   );
-  console.log("collectionName",data);
+
   useEffect(() => {
     document.title = collectionName;
   }, [collectionName]);

@@ -18,7 +18,7 @@ export default function Account() {
   const [isSignup, setisSignup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [passwordShown, setpasswordShown] = useState(false);
-  console.log(passwordShown)
+
 
   const switchMode = () => {
     setisSignup(!isSignup);
