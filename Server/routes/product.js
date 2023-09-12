@@ -11,6 +11,7 @@ import {
   likeProduct,
   dislikeProduct,
   getIsFeaturedProducts,
+  getSavedProducts,
 } from "../controllers/product.js";
 
 const router = express.Router();
@@ -25,5 +26,6 @@ router.get("/", getAllProducts);
 router.get("/search/product", searchProducts);
 router.put("/:productId/like", verifyToken, likeProduct);
 router.put("/:productId/dislike", verifyToken, dislikeProduct);
+router.get("/usersaved/:username", verifyToken, getSavedProducts);
 
 export default router;

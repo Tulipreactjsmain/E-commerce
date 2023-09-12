@@ -12,7 +12,6 @@ import { createOrder } from "../config/api";
 export default function Checkout() {
   const [next, setNext] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const {
     setShippingDetails,
     shippingDetails,
@@ -21,7 +20,7 @@ export default function Checkout() {
     currentUser,
     priceTotal,
     cartItems,
-    setCartitems,
+    setCartItems,
   } = useStore();
   const {
     register,
@@ -35,7 +34,6 @@ export default function Checkout() {
       state: shippingDetails.state || "",
     },
   });
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,8 +46,6 @@ export default function Checkout() {
   const calcTax = (tax * priceTotal).toFixed(2);
   const calcShippingFee = (priceTotal / 2) * tax;
   const shippingFee = priceTotal > 3500 ? 0 : calcShippingFee.toFixed(2);
-
- 
 
   const total = (
     Number(priceTotal) +
@@ -65,15 +61,14 @@ export default function Checkout() {
     shippingDetails: shippingDetails,
     totalPrice: total,
   };
-  console.log(order)
+
   const placeOrder = async () => {
     setLoading(true);
     try {
       const res = await createOrder(order, currentUser?.access_token);
-      console.log("order", res);
       if (res.status === 201) {
         toast.success("Order successfully created");
-        setCartitems([]);
+        setCartItems([]);
         navigate(`/account/${currentUser?.user?.username}/orders`);
       }
     } catch (error) {
@@ -86,10 +81,10 @@ export default function Checkout() {
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    console.log(data);
     setShippingDetails(data);
     next ? null : setNext((prev) => !prev);
   };
+
   return (
     <PageLayout>
       <Headings title="Checkout" />
@@ -115,29 +110,29 @@ export default function Checkout() {
             <hr />
             <div className="mt-4">
               <div className="d-flex justify-content-between mb-2 fs-6">
-                <p className="mb-0">Subtotal:</p>
+                <p className="mb-0">Subtotal: </p>
                 <p>{formatCurrency(priceTotal)}</p>
               </div>
               <div className="d-flex justify-content-between mb-2 fs-6">
-                <p className="mb-0">Tax</p>
-                <p className="mb-0 text-success">Fixed 0.5</p>
+                <p className="mb-0">Tax: </p>
+                <p className="mb-0 text-success">Fixed 0.05 </p>
                 <p>{formatCurrency(calcTax)}</p>
               </div>
               <div className="d-flex justify-content-between mb-2 fs-6">
-                <p className="mb-0"> Shipping Fee</p>
-
+                <p className="mb-0">Shipping Fee: </p>
                 <p>{formatCurrency(shippingFee)}</p>
               </div>
               <hr />
               <div className="d-flex justify-content-between mb-2 fs-6">
-                <p className="mb-0"> Total</p>
-
+                <p className="mb-0">Total: </p>
                 <p className="fw-bold">{formatCurrency(total)}</p>
               </div>
             </div>
           </Col>
           <Col md={6} lg={5}>
-            <h1>{next ? "Shipping info" : "Enter shipping details"}</h1>
+            <h1 className="fs-4">
+              {next ? "Shipping info" : "Enter shipping detail"}
+            </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               {!next ? (
                 <>
@@ -151,7 +146,7 @@ export default function Checkout() {
                       {...register("fullname", registerOptions.fullname)}
                     />
                     {errors.fullname?.message && (
-                      <p className="mb-3 inputRegBox text-danger fs-6">
+                      <p className="text-danger fs-6">
                         {errors.fullname.message}
                       </p>
                     )}
@@ -212,8 +207,8 @@ export default function Checkout() {
                   {paymentOptions.map((item, i) => (
                     <div className="form-check" key={i}>
                       <input
-                        className="form-check-input"
                         type="radio"
+                        className="form-check-input"
                         name="paymentMethod"
                         id={i}
                         value={item.name}
@@ -259,7 +254,7 @@ export default function Checkout() {
                         onClick={placeOrder}
                       >
                         {loading ? (
-                          <Spinner animation="border " size="sm" />
+                          <Spinner animation="border" size="sm" />
                         ) : (
                           "Place order"
                         )}
@@ -273,8 +268,7 @@ export default function Checkout() {
         </Row>
       ) : (
         <h1 className="text-center fs-4">
-          {" "}
-          You have no orders yet . Pls add a few items to your bag
+          You have no orders yet. Please add a few items to your bag
         </h1>
       )}
     </PageLayout>

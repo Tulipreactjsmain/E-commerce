@@ -89,13 +89,13 @@ export default function Navbar() {
                       </Dropdown.Item>
                       <Dropdown.Item
                         as={NavLink}
-                        to={`account/user-profile/${currentUser.user?.username}/orders`}
+                        to={`account/${currentUser.user?.username}/orders`}
                       >
                         Orders
                       </Dropdown.Item>
                       <Dropdown.Item
                         as={NavLink}
-                        to={`account/user-profile/${currentUser.user?.username}/wishlist`}
+                        to={`account/${currentUser.user?.username}/wishlist`}
                       >
                         Wishlist
                       </Dropdown.Item>

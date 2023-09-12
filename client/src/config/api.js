@@ -102,3 +102,10 @@ export const getOrderDetail = async (orderId, token) => {
   });
   return res;
 };
+
+export const getSavedProducts = async (username, token) => {
+  const res = await instance.get(`/api/v1/products/usersaved/${username}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};

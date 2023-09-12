@@ -1,6 +1,7 @@
 import Product from "../models/product.js";
 import { customError } from "../config/error.js";
 import data from "../sampledata.js";
+import User from "../models/auth.js"
 //send sampledata to mongodb
 
 export const sendProductsToDB = async (req, res) => {
@@ -95,3 +96,19 @@ export const dislikeProduct = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+
+export const getSavedProducts = async (req, res) => {
+  const {username}  = req.params
+  const id = req.user.id
+  try {
+    const user = await User.findOne({username})
+    if(!user) return next(customError(500, "Can't find user"))
+    if(user) {
+      const liked = await Product.find({likes: id})
+      res.status(200).json(liked)
+    }
+  } catch (error) {
+    
+  }
+}

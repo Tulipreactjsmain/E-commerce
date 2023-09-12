@@ -24,6 +24,7 @@ export default function ShoppingBag() {
     decreaseCartQty,
     deleteCartItems,
     priceTotal,
+    currentUser,
   } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +35,7 @@ export default function ShoppingBag() {
         className="position-relative mx-4"
         onClick={location.pathname === "/bag" ? null : handleShow}
       >
-        <BiShoppingBag style={{ cursor: "pointer" }} size="24px"/>
+        <BiShoppingBag style={{ cursor: "pointer" }} size="24px" />
         <h6 className="position-absolute top-0 start-100 translate-middle fs-6">
           <Badge pill bg="dark">
             {cartQuantity > 0 ? cartQuantity : 0}
@@ -52,10 +53,7 @@ export default function ShoppingBag() {
             <>
               {cartItems?.map((item) => (
                 <div key={item._id}>
-                  <div
-                    
-                    className="d-flex align-items-center gap-4 mb-4 w-100"
-                  >
+                  <div className="d-flex align-items-center gap-4 mb-4 w-100">
                     <Link
                       to={`/collections/${item.category}/${item.slug}`}
                       onClick={handleClose}
