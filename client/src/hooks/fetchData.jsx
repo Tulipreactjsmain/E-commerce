@@ -8,11 +8,11 @@ export default function useFetchData(url, options, token) {
   useEffect(() => {
     if (!url) return;
     const fetchData = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const res = await url(options, token);
         setData(res.data);
-      } catch (error) {   
+      } catch (error) {
         console.log(error);
         setError(error);
       } finally {
@@ -21,9 +21,5 @@ export default function useFetchData(url, options, token) {
     };
     fetchData();
   }, [url, options, token]);
-  return { data, error, loading };
+  return { data, setData, error, loading };
 }
-
-
-
-

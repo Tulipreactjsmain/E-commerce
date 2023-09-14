@@ -73,6 +73,13 @@ export const loginUser = async (username, password) => {
   return res;
 };
 
+export const getUserProfile = async (username, token) => {
+  const res = await instance.get(`/api/v1/auth/user-profile/${username}`, {
+    headers: {Authorization: `Bearer ${token}`}
+  })
+  return res
+}
+
 /// ORDERS
 
 export const createOrder = async (order, token) => {
@@ -109,3 +116,10 @@ export const getSavedProducts = async (username, token) => {
   });
   return res;
 };
+
+export const trackOrders = async(id, status, token) => {
+  const res = await instance.put(`/api/v1/orders/${id}/tracking`, status, {
+    headers: {Authorization: `Bearer ${token}`}
+  })
+  return res
+}

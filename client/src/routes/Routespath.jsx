@@ -10,9 +10,10 @@ import {
   Orders,
   OrderId,
   SavedItems,
+  Profile,
+  Shoporders,
 } from "../pages";
 import Categories from "../pages/Categories";
-
 
 export default function Routespath() {
   const router = createBrowserRouter([
@@ -60,12 +61,20 @@ export default function Routespath() {
                 },
               ],
             },
+            {
+              path: ":username/saveditems",
+              element: <SavedItems />,
+            },
+            {
+              path: "user-profile/:username",
+              element: <Profile />,
+            },
+            {
+              path: "allorders",
+              element: <Shoporders/>
+            },
           ],
         },
-        {
-          path: ":username/saveditems",
-          element: <SavedItems/>
-        }
       ],
     },
   ]);

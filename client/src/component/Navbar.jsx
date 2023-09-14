@@ -95,9 +95,9 @@ export default function Navbar() {
                       </Dropdown.Item>
                       <Dropdown.Item
                         as={NavLink}
-                        to={`account/${currentUser.user?.username}/wishlist`}
+                        to={`account/${currentUser.user?.username}/saveditems`}
                       >
-                        Wishlist
+                        Saved items
                       </Dropdown.Item>
                       <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
                     </Dropdown.Menu>
