@@ -14,14 +14,14 @@ export default function Shoporders() {
     getAllUserOrders,
     currentUser.access_token
   );
-  console.log("allorders", data);
+  console.log("alloders", data);
 
   useEffect(() => {
     document.title = "Shop orders";
   }, []);
 
   const handleOrderUpdate = async (id) => {
-    const item = data.filter((order) => order._od === id)[0];
+    const item = data.filter((order) => order._id === id)[0];
     const currentStatus = item.status;
     try {
       const res = await trackOrders(
@@ -31,12 +31,12 @@ export default function Shoporders() {
       );
       setData([res.data, ...data.filter((order) => order._id !== id)]);
     } catch (error) {
-      console.log(error);
+      console.log();
       toast.error("Error updating this order request");
     }
   };
 
-  error && <p className="mt-5 fs-5"> {error.message}</p>;
+  error && <p className="mt-3 fs-5">{error.message}</p>;
 
   return (
     <>
@@ -60,13 +60,14 @@ export default function Shoporders() {
                   <th className="fw-medium">Update action</th>
                 </tr>
               </thead>
-              {data.map((order, i) => {
+              {data.map((order, i) => (
                 <tbody key={order._id}>
                   <tr>
                     <td>{i}</td>
                     <td>
                       <Link
-                        to={`/account/${currentUser?.user?.username}/oders/${order._id}`}
+                        to={`/account/${currentUser?.user?.username}/
+                        orders/${order._id}`}
                         className={
                           order.isDelivered
                             ? "text-success fs-6"
@@ -79,27 +80,26 @@ export default function Shoporders() {
                     <td>{order.shippingDetails.fullname}</td>
                     <td>{formatCurrency(order.totalPrice)}</td>
                     <td>{order.paymentMethod}</td>
-                    <td>{order.isPaid ? "Paid" : "Not paid"}</td>
+                    <td>{order.isPaid ? "paid" : "not paid"}</td>
                     <td>
                       {order.status === 0 && "Waiting"}
                       {order.status === 1 && "Processing"}
-                      {order.status === 2 && "Fulfilled"}
+                      {order.status === 0 && "Fulfilled"}
                     </td>
-                    <td>{order.isDelivered ? "Delivered" : "Pending"}</td>
+                    <td>{order.isDelivered ? "Deliverde" : "Pending"}</td>
                     <td>
                       <Button
                         variant={order.isDelivered ? "success" : "warning"}
-                        onClick={() => {
-                          handleOrderUpdate(order._id);
-                        }}
+                        className="rounded-0 fw-bold"
+                        onClick={() => handleOrderUpdate(order._id)}
                         disabled={order.isDelivered === true}
                       >
-                        {order.isDelivered ? "COMPLETED" : "UPDATE"}
+                        {order.isDelivered ? "Completed" : "Update"}
                       </Button>
                     </td>
                   </tr>
-                </tbody>;
-              })}
+                </tbody>
+              ))}
             </Table>
           ) : (
             <h1 className="fs-6">No customer orders yet.</h1>

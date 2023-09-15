@@ -62,7 +62,7 @@ export default function SavedItems() {
                 >
                   <Col md={8} className="mb-4">
                     <div className="d-flex align-items-center gap-3">
-                      <Link>
+                      <Link to={`/collections/${item.category}/${item.slug}`}>
                         <Image
                           src={item?.images[0]}
                           alt={item.title}
