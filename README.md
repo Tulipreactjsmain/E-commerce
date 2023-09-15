@@ -1,4 +1,4 @@
-# <h1>Buy-n-Shop-Fullstack</h1>
+# <h1>E-Commerce-Fullstack</h1>
 
 This is a simple full-stack e-commerce project developed using MERN stack. It demonstrates the basic functionalities of an e-commerce platform, allowing users to browse products, add items to their cart, and complete orders.
 
