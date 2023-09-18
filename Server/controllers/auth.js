@@ -77,16 +77,23 @@ export const getSingleUser = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res) => {
+  const { username, email, passsword, profileImg } = req.body;
   const userId = await User.findById(req.user.id);
   try {
     if (userId) {
-      userId.username = req.body.username || userId.username;
-      userId.email = req.body.email || userId.email;
-      userId.profileImg = req.body.profileImg || userId.profileImg;
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      if (hashedPassword) {
-        userId.password = hashedPassword;
+      userId.username = username || userId.username;
+      userId.email = email || userId.email;
+      userId.profileImg = profileImg || userId.profileImg;
+
+      if (passsword) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        if (hashedPassword) {
+          userId.password = hashedPassword;
+        }
+      } else {
+        userId.passsword = userId.passsword;
       }
+
       const updatedUser = await userId.save();
       const user = {
         _id: updatedUser._id,

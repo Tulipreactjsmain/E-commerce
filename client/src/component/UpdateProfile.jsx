@@ -5,17 +5,18 @@ import { Button, Spinner } from "react-bootstrap";
 import { useStore } from "../config/store";
 import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import registerOptions, { RegisterOptions } from "../utils/formValidation";
 
 export default function UpdateProfile() {
-    const [passwordShown, setPasswordShown] = useState(false);
-    const [imgPic, setImgPic] = useState(""); //send to cloudinary
-    const [imgLink, setImgLink] = useState(""); //get cloudinary 
-    const [loading, setLoading] = useState(false)
-    const {
-      register,
-      handleSubmit,
-      formState: { errors }
-    } = useForm()
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [imgPic, setImgPic] = useState(""); //send to cloudinary
+  const [imgLink, setImgLink] = useState(""); //get cloudinary
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -34,8 +35,11 @@ export default function UpdateProfile() {
             id="username"
             className="w-100 mb-0 inputReg"
             autoFocus
-            {...register("username")}
+            {...register("username", registerOptions.username)}
           />
+          {errors?.username?.message && (
+            <p className="text-danger fs-6">{errors.username.message}</p>
+          )}
         </div>
         <div className="mb-3 inputRegBox">
           <input
@@ -82,10 +86,9 @@ export default function UpdateProfile() {
           />
         </div>
         <div className="mb-3 inputRegBox">
-            <Button type="submit" variant="dark" className="w-100 rounded-0">
-                {loading ? <Spinner animation="border" size="sm"/> : "Update"}
-            </Button>
-
+          <Button type="submit" variant="dark" className="w-100 rounded-0">
+            {loading ? <Spinner animation="border" size="sm" /> : "Update"}
+          </Button>
         </div>
       </form>
     </>
