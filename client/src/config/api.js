@@ -1,4 +1,5 @@
-import { instance } from "./connect";
+import { CLOUDINARY_UPLOAD_PRESET, instance } from "./connect";
+import axios from "axios";
 
 export const getCategories = async () => {
   const res = await instance.get("/api/v1/categories");
@@ -75,10 +76,17 @@ export const loginUser = async (username, password) => {
 
 export const getUserProfile = async (username, token) => {
   const res = await instance.get(`/api/v1/auth/user-profile/${username}`, {
-    headers: {Authorization: `Bearer ${token}`}
-  })
-  return res
-}
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
+export const updateUserProfile = async (profile, token) => {
+  const res = await instance.put("/api/v1/auth/updateuser", profile, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
 
 /// ORDERS
 
@@ -117,9 +125,17 @@ export const getSavedProducts = async (username, token) => {
   return res;
 };
 
-export const trackOrders = async(id, status, token) => {
+export const trackOrders = async (id, status, token) => {
   const res = await instance.put(`/api/v1/orders/${id}/tracking`, status, {
-    headers: {Authorization: `Bearer ${token}`}
-  })
-  return res
-}
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
+export const uploadToCloudinary = async (file) => {
+  const formData = new formData();
+  formData.append("file", file);
+  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  const data = await axios.post(CLOUDINARY_URL, formData);
+  return data;
+};

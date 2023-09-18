@@ -77,7 +77,7 @@ export const getSingleUser = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { username, email, passsword, profileImg } = req.body;
+  const { username, email, password, profileImg } = req.body;
   const userId = await User.findById(req.user.id);
   try {
     if (userId) {
@@ -85,13 +85,13 @@ export const updateUser = async (req, res) => {
       userId.email = email || userId.email;
       userId.profileImg = profileImg || userId.profileImg;
 
-      if (passsword) {
+      if (password) {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         if (hashedPassword) {
           userId.password = hashedPassword;
         }
       } else {
-        userId.passsword = userId.passsword;
+        userId.password = userId.password;
       }
 
       const updatedUser = await userId.save();
