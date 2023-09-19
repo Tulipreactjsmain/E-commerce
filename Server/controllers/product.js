@@ -1,7 +1,8 @@
 import Product from "../models/product.js";
 import { customError } from "../config/error.js";
 import data from "../sampledata.js";
-import User from "../models/auth.js"
+import User from "../models/auth.js";
+import { productReducer } from "../../client/src/reducers/productReducer.js";
 //send sampledata to mongodb
 
 export const sendProductsToDB = async (req, res) => {
@@ -97,18 +98,33 @@ export const dislikeProduct = async (req, res) => {
   }
 };
 
-
 export const getSavedProducts = async (req, res) => {
-  const {username}  = req.params
-  const id = req.user.id
+  const { username } = req.params;
+  const id = req.user.id;
   try {
-    const user = await User.findOne({username})
-    if(!user) return next(customError(500, "Can't find user"))
-    if(user) {
-      const liked = await Product.find({likes: id})
-      res.status(200).json(liked)
+    const user = await User.findOne({ username });
+    if (!user) return next(customError(500, "Can't find user"));
+    if (user) {
+      const liked = await Product.find({ likes: id });
+      res.status(200).json(liked);
     }
+  } catch (error) {}
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    await Product.findByIdAndRemove(req.params.id);
+    res.status(200).json(`Product deleted successfully`);
   } catch (error) {
-    
+    res.status(500).json(error);
   }
-}
+};
+
+export const createNewProduct = async (req, res) => {
+  try {
+    const product = await Product.insertMany(req.body);
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

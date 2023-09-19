@@ -1,5 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import jwt_decode from "jwt-decode";
+import {
+  AiOutlineUnorderedList,
+  AiOutlineUser,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { BsFillBriefcaseFill } from "react-icons/bs";
+import { FiSettings, FiServer } from "react-icons/fi";
+
 const Context = createContext();
 let initialUser = "";
 let initialCart = [];
@@ -13,6 +22,21 @@ export const StateContext = ({ children }) => {
   const [shippingDetails, setShippingDetails] = useState(shippingData);
   console.log("cartItems", cartItems);
 
+  //check token expiration
+  useEffect(() => {
+    const checkJwtExpiry = async () => {
+      const token = JSON.parse(localStorage.getItem("userinfo"));
+      if (token) {
+        const { exp } = jwt_decode(token.access_token);
+        if (exp * 1000 < Date.now()) {
+          localStorage.removeItem("userinfo");
+          location.replace("/");
+          toast.error("Token expired, pls sign in to get access");
+        }
+      }
+    };
+    checkJwtExpiry();
+  }, []);
   //save payment method
   useEffect(() => {
     if (paymentMethod !== paymentData) {
@@ -132,6 +156,42 @@ export const StateContext = ({ children }) => {
     location.replace("/");
     toast.success("Logged out successfully!");
   };
+  const links = [
+    {
+      name: "orders",
+      path: `${currentUser?.user?.username}/orders`,
+      icon: <AiOutlineUnorderedList />,
+    },
+    {
+      name: "Profile",
+      path: `user-profile/${currentUser?.user?.username}`,
+      icon: <AiOutlineUser />,
+    },
+    {
+      name: "Saved Items",
+      path: `${currentUser?.user?.username}/saveditems`,
+      icon: <AiOutlineShoppingCart />,
+    },
+  ];
+
+  const adminLinks = [
+    {
+      name: "Shop orders",
+      path: `allorders`,
+      icon: <BsFillBriefcaseFill />,
+    },
+
+    {
+      name: "Manage product",
+      path: `manage-product`,
+      icon: <FiSettings />,
+    },
+    {
+      name: "Add product",
+      path: `add-new-product`,
+      icon: <FiServer />,
+    },
+  ];
 
   return (
     <Context.Provider
@@ -153,6 +213,8 @@ export const StateContext = ({ children }) => {
         setShippingDetails,
         paymentMethod,
         setPaymentMethod,
+        links,
+        adminLinks,
       }}
     >
       {children}

@@ -12,6 +12,7 @@ import {
   SavedItems,
   Profile,
   Shoporders,
+  ManageProduct,
 } from "../pages";
 import Categories from "../pages/Categories";
 
@@ -72,6 +73,10 @@ export default function Routespath() {
             {
               path: "allorders",
               element: <Shoporders/>
+            },
+            {
+              path: "manage-product",
+              element: <ManageProduct/>
             },
           ],
         },

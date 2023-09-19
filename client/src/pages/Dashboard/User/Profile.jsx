@@ -26,10 +26,10 @@ export default function Profile() {
     <div>
       {loading && <Loader />}
       <Row className="align-items-center justify-content-around gy-2">
-        <Col md={5} className="text-center text-lg-start mb-4">
+        <Col md={12} className="text-center mb-4">
           <Image
             src={data?.profileImg}
-            className="rounded-circle object-fit-cover mb-4"
+            className="rounded-circle object-fit-cover mb-4 shadow"
             style={{ width: "100px", height: "100px" }}
           />
           <h1 className="fs-5 fw-bold">{data.username}</h1>

@@ -9,6 +9,7 @@ import SavedItems from "./Dashboard/User/SavedItems";
 import OrderId from "./Dashboard/User/OrderId";
 import Profile from "./Dashboard/User/Profile";
 import Shoporders from "./Dashboard/admin/Shoporders";
+import ManageProduct from "./Dashboard/admin/ManageProduct";
 export {
   Home,
   Collections,
@@ -20,5 +21,6 @@ export {
   OrderId,
   SavedItems,
   Profile,
-  Shoporders
+  Shoporders,
+  ManageProduct
 };

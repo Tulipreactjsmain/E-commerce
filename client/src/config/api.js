@@ -1,4 +1,4 @@
-import { CLOUDINARY_UPLOAD_PRESET, instance } from "./connect";
+import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_URL, instance } from "./connect";
 import axios from "axios";
 
 export const getCategories = async () => {
@@ -40,7 +40,7 @@ export const likeProduct = async (productId, userId, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return res;
+  return res;``
 };
 
 export const disLikeProduct = async (productId, userId, token) => {
@@ -54,6 +54,14 @@ export const disLikeProduct = async (productId, userId, token) => {
 
   return res;
 };
+
+
+export const deleteProduct = async (productId, token)=> {
+  const res = await instance.delete(`/api/v1/products/delete/${productId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return res
+}
 
 export const registerUser = async (username, email, password) => {
   const res = await instance.post("/api/v1/auth/register", {
@@ -133,7 +141,7 @@ export const trackOrders = async (id, status, token) => {
 };
 
 export const uploadToCloudinary = async (file) => {
-  const formData = new formData();
+  const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
   const data = await axios.post(CLOUDINARY_URL, formData);
