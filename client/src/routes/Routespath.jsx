@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root } from "../component";
+import { Root, Error } from "../component";
 import {
   Collections,
   Home,
@@ -24,6 +24,7 @@ export default function Routespath() {
     {
       path: "/",
       element: <Root />,
+      errorElement: <Error/>,
       children: [
         {
           path: "/",

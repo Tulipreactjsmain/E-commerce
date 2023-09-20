@@ -81,12 +81,26 @@ export default function Shoporders() {
                     <td>{formatCurrency(order.totalPrice)}</td>
                     <td>{order.paymentMethod}</td>
                     <td>{order.isPaid ? "paid" : "not paid"}</td>
-                    <td>
+                    <td
+                      className={
+                        (order.status === 0 && "text-warning") ||
+                        (order.status === 1 && "text-danger") ||
+                        (order.status === 0 && "text-success fw-medium")
+                      }
+                    >
                       {order.status === 0 && "Waiting"}
                       {order.status === 1 && "Processing"}
                       {order.status === 0 && "Fulfilled"}
                     </td>
-                    <td>{order.isDelivered ? "Deliverde" : "Pending"}</td>
+                    <td
+                      className={
+                        order.isDelivered
+                          ? "text-success fw-medium"
+                          : "text-black"
+                      }
+                    >
+                      {order.isDelivered ? "Deliverde" : "Pending"}
+                    </td>
                     <td>
                       <Button
                         variant={order.isDelivered ? "success" : "warning"}
@@ -94,7 +108,9 @@ export default function Shoporders() {
                         onClick={() => handleOrderUpdate(order._id)}
                         disabled={order.isDelivered === true}
                       >
-                        {order.isDelivered ? "Completed" : "Update"}
+                        {order.isDelivered && "COMPLETED"}
+                        {order.isDelivered === false && order.status === 0 && 'UPDATE'}
+                        {order.isDelivered === false && order.status === 1 && 'FULFILL'}
                       </Button>
                     </td>
                   </tr>
