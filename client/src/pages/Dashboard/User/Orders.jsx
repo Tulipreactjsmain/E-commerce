@@ -90,11 +90,12 @@ export default function Orders() {
                           </Button>
                         </Link>
                       </Col>
+                      <hr />
                     </Row>
                   ))}
                 </>
               ) : (
-                <h1>Sorry You have no orders. Start by purchasing an item.</h1>
+                <h1 className="fs-5">Sorry You have no orders. Start by purchasing an item.</h1>
               )}
             </>
           )}

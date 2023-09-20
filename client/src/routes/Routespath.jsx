@@ -16,6 +16,7 @@ import {
   CreateProduct,
   Search,
 } from "../pages";
+import ProtectedRoutes from "./ProtectedRoutes";
 import Categories from "../pages/Categories";
 
 export default function Routespath() {
@@ -56,7 +57,11 @@ export default function Routespath() {
         },
         {
           path: "account",
-          element: <Account />,
+          element: (
+            <ProtectedRoutes>
+              <Account />
+            </ProtectedRoutes>
+          ),
           children: [
             {
               path: ":username/orders",

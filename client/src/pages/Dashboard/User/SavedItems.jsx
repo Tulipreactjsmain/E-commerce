@@ -117,7 +117,7 @@ export default function SavedItems() {
               ))}
             </>
           ) : (
-            <h1>Sorry, you have not liked a product</h1>
+            <h1 className="fs-5">Sorry, you have not liked a product</h1>
           )}
         </>
       )}

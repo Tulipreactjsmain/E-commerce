@@ -153,3 +153,8 @@ export const uploadToCloudinary = async (file) => {
   const data = await axios.post(CLOUDINARY_URL, formData);
   return data;
 };
+
+export const searchProduct = async (searchQuery) => {
+  const res = await instance.get(`/api/v1/products/search/product?q=${searchQuery}`)
+  return res
+}

@@ -56,7 +56,7 @@ export default function Navbar() {
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
-              <div className="center-div d-flex align-item-center gap-4 ms-auto">
+              <div className="center-div d-flex align-item-center gap-2 gap-lg-4 ms-auto">
                 <BsSearch
                   style={{ cursor: "pointer" }}
                   size="24px"
