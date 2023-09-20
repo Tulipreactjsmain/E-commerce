@@ -10,6 +10,8 @@ import OrderId from "./Dashboard/User/OrderId";
 import Profile from "./Dashboard/User/Profile";
 import Shoporders from "./Dashboard/admin/Shoporders";
 import ManageProduct from "./Dashboard/admin/ManageProduct";
+import CreateProduct from "./Dashboard/admin/CreateProduct";
+import Search from "./Search";
 export {
   Home,
   Collections,
@@ -22,5 +24,7 @@ export {
   SavedItems,
   Profile,
   Shoporders,
-  ManageProduct
+  ManageProduct,
+  CreateProduct,
+  Search,
 };

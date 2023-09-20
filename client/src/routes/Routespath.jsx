@@ -13,6 +13,8 @@ import {
   Profile,
   Shoporders,
   ManageProduct,
+  CreateProduct,
+  Search,
 } from "../pages";
 import Categories from "../pages/Categories";
 
@@ -49,6 +51,10 @@ export default function Routespath() {
           element: <Checkout />,
         },
         {
+          path: "search",
+          element: <Search />,
+        },
+        {
           path: "account",
           element: <Account />,
           children: [
@@ -72,11 +78,15 @@ export default function Routespath() {
             },
             {
               path: "allorders",
-              element: <Shoporders/>
+              element: <Shoporders />,
             },
             {
               path: "manage-product",
-              element: <ManageProduct/>
+              element: <ManageProduct />,
+            },
+            {
+              path: "add-new-product",
+              element: <CreateProduct />,
             },
           ],
         },

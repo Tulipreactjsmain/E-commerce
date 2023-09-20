@@ -40,7 +40,7 @@ export const likeProduct = async (productId, userId, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return res;``
+  return res;
 };
 
 export const disLikeProduct = async (productId, userId, token) => {
@@ -55,13 +55,19 @@ export const disLikeProduct = async (productId, userId, token) => {
   return res;
 };
 
+export const createNewProduct = async (product, token) => {
+  const res = await instance.post("/api/v1/products/create", product, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
 
-export const deleteProduct = async (productId, token)=> {
+export const deleteProduct = async (productId, token) => {
   const res = await instance.delete(`/api/v1/products/delete/${productId}`, {
     headers: { Authorization: `Bearer ${token}` },
-  })
-  return res
-}
+  });
+  return res;
+};
 
 export const registerUser = async (username, email, password) => {
   const res = await instance.post("/api/v1/auth/register", {

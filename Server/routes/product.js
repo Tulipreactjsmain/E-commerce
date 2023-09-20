@@ -30,6 +30,6 @@ router.put("/:productId/like", verifyToken, likeProduct);
 router.put("/:productId/dislike", verifyToken, dislikeProduct);
 router.get("/usersaved/:username", verifyToken, getSavedProducts);
 router.delete("/delete/:id", verifyToken, deleteProduct);
-router.get("/create", verifyToken, createNewProduct);
+router.post("/create", verifyToken, createNewProduct);
 
 export default router;

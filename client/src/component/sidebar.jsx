@@ -5,9 +5,11 @@ import { getCategories } from "../config/api";
 import { NavLink } from "react-bootstrap";
 import { useState } from "react";
 import { useStore } from "../config/store";
+import Loader from "../utils/Loader";
+
 export default function Sidebar() {
   const [show, setShow] = useState(false);
-  const { data } = useFetchData(getCategories);
+  const { data, error, loading } = useFetchData(getCategories);
   const { currentUser, links, adminLinks, logOut } = useStore();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,19 +33,28 @@ export default function Sidebar() {
           <div>
             <hr />
             <h1 className="mb-2 fs-4 pb-3">Collections</h1>
-            {data.map((category) => (
-              <div key={category._id} className="mb-3">
-                <NavLink
-                  to={`/collecti/${category.name}`}
-                  className={({ isActive }) =>
-                    isActive ? "text-success fw-bold" : "text-black fw-medium"
-                  }
-                  onClick={handleClose}
-                >
-                  {category.name}
-                </NavLink>
-              </div>
-            ))}
+            {error && <p className="fs-5">Failed to fetch collections</p>}
+            {loading ? (
+              <Loader />
+            ) : (
+              <>
+                {data.map((category) => (
+                  <div key={category._id} className="mb-3">
+                    <NavLink
+                      to={`/collections/${category.name}`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-success fw-bold fs-5"
+                          : "text-black fw-medium"
+                      }
+                      onClick={handleClose}
+                    >
+                      {category.name}
+                    </NavLink>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
           {currentUser && (
             <>
@@ -54,7 +65,9 @@ export default function Sidebar() {
                   <NavLink
                     to={`account/${item.path}`}
                     className={({ isActive }) =>
-                      isActive ? "text-success fw-bold" : "text-black fw-medium"
+                      isActive
+                        ? "text-success fw-bold fs-5"
+                        : "text-black fw-medium"
                     }
                     onClick={handleClose}
                   >
@@ -70,7 +83,7 @@ export default function Sidebar() {
                         to={`account/${item.path}`}
                         className={({ isActive }) =>
                           isActive
-                            ? "text-success fw-bold"
+                            ? "text-success fw-bold fs-5"
                             : "text-black fw-medium"
                         }
                         onClick={handleClose}
@@ -84,8 +97,8 @@ export default function Sidebar() {
               <hr />
               <div className="d-flex align-items-center" onClick={logOut}>
                 <div>
-                  <BiPowerOff className="me-2"/>
-                  <span className="fw-medium fs-5">  Logout</span>
+                  <BiPowerOff className="me-2" size="24px" />
+                  <span className="fw-medium fs-5"> Logout</span>
                 </div>
               </div>
             </>
