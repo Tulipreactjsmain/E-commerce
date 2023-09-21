@@ -33,7 +33,6 @@ export default function CreateProduct() {
     }
   };
   const onSubmitHandler = async (data) => {
-    console.log("data", data);
     setLoading(true);
     let productImgs = [];
     try {

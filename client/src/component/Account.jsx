@@ -55,10 +55,8 @@ export default function Account() {
         }
       } else {
         const res = await loginUser(username, password);
-        console.log(res);
         if (res.status === 200) {
-          setCurrentUser(res.data);
-        
+          setCurrentUser(res.data);  
           toast.success("Login Successful");
           navigate(from, { replace: true });
           handleClose();

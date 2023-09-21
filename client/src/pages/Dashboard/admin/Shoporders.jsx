@@ -14,7 +14,6 @@ export default function Shoporders() {
     getAllUserOrders,
     currentUser.access_token
   );
-  console.log("alloders", data);
 
   useEffect(() => {
     document.title = "Shop orders";
@@ -31,7 +30,7 @@ export default function Shoporders() {
       );
       setData([res.data, ...data.filter((order) => order._id !== id)]);
     } catch (error) {
-      console.log();
+      console.log(error);
       toast.error("Error updating this order request");
     }
   };
@@ -104,7 +103,7 @@ export default function Shoporders() {
                     <td>
                       <Button
                         variant={order.isDelivered ? "success" : "warning"}
-                        className="rounded-0 fw-bold"
+                        className="rounded-0 fw-bold w-100"
                         onClick={() => handleOrderUpdate(order._id)}
                         disabled={order.isDelivered === true}
                       >

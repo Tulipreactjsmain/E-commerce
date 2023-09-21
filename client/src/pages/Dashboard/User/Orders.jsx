@@ -13,7 +13,6 @@ export default function Orders() {
     error,
     loading,
   } = useFetchData(getUserOrders, currentUser?.access_token);
-  console.log("userorders", orders);
   error && <p className="mt-5 fs-5">{error.message}</p>;
   return (
     <>

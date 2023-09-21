@@ -16,7 +16,6 @@ export default function Profile() {
     username,
     currentUser?.access_token
   );
-  console.log("profile", data);
 
   useEffect(() => {
     document.title = `${data?.username} Profile`;

@@ -27,16 +27,16 @@ export default function ProductDetail() {
   const [showModal, setShowModal] = useState(false);
   const { error, data, loading } = useFetchData(getAllProducts);
   const { scroll, scrollRef } = useScroll();
-  const { currentUser, setCurrentUser, increaseCartQty , setShow} = useStore();
+  const { currentUser, setCurrentUser, increaseCartQty, setShow } = useStore();
   const suggestedProducts = data.filter(
     (product) => product.category !== state?.product?.category
   );
 
-  const addToCart = (item)=> {
-    increaseCartQty(item)
-    toast.success(`${item.title} Added to bag`)
-    setShow(true)
-  }
+  const addToCart = (item) => {
+    increaseCartQty(item);
+    toast.success(`${item.title} Added to bag`);
+    setShow(true);
+  };
 
   const handleLike = async () => {
     try {
@@ -80,7 +80,6 @@ export default function ProductDetail() {
     try {
       const res = await getOneProduct(slug);
       dispatch({ type: "GET_PRODUCT_DETAIL_SUCCESS", payload: res.data });
-      console.log("selected product", res.data);
     } catch (error) {
       console.log(error);
       dispatch({ type: "PRODUCT_ERROR", payload: error.message });
@@ -89,7 +88,6 @@ export default function ProductDetail() {
       dispatch({ type: "END_PRODUCT_REQUEST" });
     }
   };
-
 
   useEffect(() => {
     getProductDetail();
@@ -150,16 +148,11 @@ export default function ProductDetail() {
                       : ""
                   }
                   onClick={() => {
-                    console.log("Current user ID:", currentUser?.user?._id);
-                    console.log("Product likes:", state?.product?.likes);
-
                     if (
                       state?.product?.likes?.includes(currentUser?.user?._id)
                     ) {
-                      console.log("Calling handleDislike");
                       handleDislLike();
                     } else {
-                      console.log("Calling handleLike");
                       handleLike();
                     }
                   }}
@@ -168,7 +161,11 @@ export default function ProductDetail() {
               <p className="mt-3 fs-5">
                 {formatCurrency(state?.product?.price)}
               </p>
-              <Button variant="dark" className="mt-3 w-100 rounded-0" onClick={()=>addToCart(state?.product)}>
+              <Button
+                variant="dark"
+                className="mt-3 w-100 rounded-0"
+                onClick={() => addToCart(state?.product)}
+              >
                 ADD TO BAG
               </Button>
 
