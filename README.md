@@ -18,7 +18,7 @@ Clone the repository to your local machine:
 
 
 
-`git clone https://github.com/Tulipreactjs/Buy-n-Shop-Fullstack.git`
+`git clone https://github.com/Tulipreactjs/E-commerce.git`
 
 
 Navigate to the project directory:
