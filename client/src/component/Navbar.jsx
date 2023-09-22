@@ -47,7 +47,7 @@ export default function Navbar() {
                   {data.map((category) => (
                     <Dropdown.Item
                       key={category._id}
-                      className=" fs-5  mb-3"
+                      className="  mb-3"
                       as={NavLink}
                       to={`/collections/${category.name}`}
                     >

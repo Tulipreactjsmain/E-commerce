@@ -6,6 +6,16 @@
   text-decoration: none !important;
 }
 
+/* h1 {
+  font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
+}
+p {
+  font-size: clamp(1.3rem, 1.5vw, 1.6rem) !important;
+}
+a {
+  font-size: clamp(1.3rem, 1vw, 1.6rem) !important;
+} */
+
 /* body  {
   background: rgb(215,215,167);
 background: linear-gradient(90deg, rgba(215,215,167,1) 0%, rgba(245,245,217,1) 48%, rgba(189,189,150,1) 100%);
