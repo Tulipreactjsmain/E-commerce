@@ -24,7 +24,6 @@ Clone the repository to your local machine:
 Navigate to the project directory:
 
 
-```bash   cd Buy-n-Shop-Fullstack```
 
 Install the dependencies for both the server and client:
 
@@ -62,10 +61,7 @@ Proceed to checkout to complete your order.
 Contributing
 Contributions are welcome! Feel free to submit issues and pull requests to improve this project.
 
-License
-This project is licensed under the MIT License.
-
 Contact
 If you have any questions or need further assistance, please contact @tulipreactjs@gmail.com.
 
-Enjoy shopping on  e-commerce platform!
+Enjoy shopping on my e-commerce platform!
