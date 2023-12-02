@@ -2,7 +2,6 @@ import Product from "../models/product.js";
 import { customError } from "../config/error.js";
 import data from "../sampledata.js";
 import User from "../models/auth.js";
-import { productReducer } from "../../client/src/reducers/productReducer.js";
 //send sampledata to mongodb
 
 export const sendProductsToDB = async (req, res) => {
